@@ -156,7 +156,23 @@ REQUIRED_COLS = ["STT", "Tên thuốc", "Tên hoạt chất/thành phần", "Hà
 
 st.subheader("📤 Bước 1: Tải lên dữ liệu")
 # --- MỚI: DÒNG LƯU Ý CÁC TRƯỜNG BẮT BUỘC ---
-st.info(f"**⚠️ Lưu ý quan trọng:** File Excel/CSV tải lên bắt buộc phải có chính xác các tiêu đề cột sau (hệ thống sẽ tự động bỏ qua các cột thừa):\n\n`{', '.join(REQUIRED_COLS)}`")
+# Tạo chuỗi HTML cho các Tag màu xanh lá
+tags_html = "".join([
+    f'<span style="background-color: #38e75c; color: #000; padding: 5px 15px; '
+    f'margin: 5px; border-radius: 50px; display: inline-block; font-weight: bold; '
+    f'font-size: 13px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"># {col}</span>' 
+    for col in REQUIRED_COLS
+])
+
+st.markdown(
+    f"""
+    <div style="background-color: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2);">
+        <p style="color: white; margin-bottom: 15px; font-weight: bold;">⚠️ File tải lên bắt buộc phải có đủ các trường sau:</p>
+        <div style="line-height: 2.5;">{tags_html}</div>
+    </div>
+    """, 
+    unsafe_allow_html=True
+)
 uploaded_file = st.file_uploader("Kéo thả file Excel vào đây", type=["csv", "xlsx"])
 
 # KHỞI TẠO SESSION STATE CHO NÚT BẤM
