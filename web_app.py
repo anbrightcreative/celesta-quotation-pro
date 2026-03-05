@@ -167,7 +167,7 @@ tags_html = "".join([
 st.markdown(
     f"""
     <div style="background-color: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2);">
-        <p style="color: white; margin-bottom: 15px; font-weight: bold;">⚠️ File tải lên bắt buộc phải có đủ các trường sau:</p>
+        <p style="color: black; margin-bottom: 15px; font-weight: bold;">⚠️ LƯU Ý: File tải lên bắt buộc phải có đủ các trường/cột bên dưới (hệ thống sẽ tự động bỏ qua các trường/cột khác:</p>
         <div style="line-height: 2.5;">{tags_html}</div>
     </div>
     """, 
