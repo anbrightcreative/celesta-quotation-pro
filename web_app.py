@@ -178,7 +178,7 @@ BANNER_PNG = "brand_banner.png"
 if os.path.exists(BANNER_PNG):
     st.image(BANNER_PNG, use_container_width=True)
 
-REQUIRED_COLS = ["STT", "Tên thuốc", "Tên hoạt chất/thành phần", "Hàm Lượng", "Đường dùng", "Dạng bào chế", "Nhóm thuốc", "Giá dịch vụ (Không BHYT)"]
+REQUIRED_COLS = ["STT", "Tên thuốc", "Tên hoạt chất/thành phần", "Hàm lượng", "Đường dùng", "Dạng bào chế", "Nhóm thuốc", "Giá dịch vụ (Không BHYT)"]
 
 # --- BƯỚC 1: TẢI DỮ LIỆU & TAGS KHUYẾN NGHỊ ---
 st.subheader("📤 Bước 1: Tải lên dữ liệu")
@@ -279,12 +279,12 @@ if uploaded_file is not None:
             else:
                 col_btn1, col_btn2 = st.columns(2)
                 with col_btn1:
-                    st.button("Đã tạo xong báo giá", disabled=True, use_container_width=True)
+                    st.button("📑 Đã tạo xong báo giá", disabled=True, use_container_width=True)
                 with col_btn2:
-                    st.download_button(label="Tải báo giá", data=st.session_state.final_pdf, file_name="Bao_Gia_Celesta.pdf", mime="application/pdf", use_container_width=True)
+                    st.download_button(label="📥 Tải báo giá", data=st.session_state.final_pdf, file_name="Bao_Gia_Celesta.pdf", mime="application/pdf", use_container_width=True)
                 
                 st.markdown("<br>", unsafe_allow_html=True)
-                if st.button("🔄 Làm lại file mới"):
+                if st.button("🔄 Tạo lại file mới"):
                     st.session_state.is_generated = False
                     st.rerun()
 
