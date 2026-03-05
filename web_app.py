@@ -78,7 +78,7 @@ def set_bg_hack(main_bg):
 
         h1, h2, h3, .stSubheader {{
             color: #FFFFFF !important;
-            text-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 0px 1px 2px rgba(0,0,0,0.1);
         }}
 
         /* --- UI NÚT BẤM --- */
