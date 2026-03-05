@@ -58,18 +58,36 @@ def set_bg_hack(main_bg):
             background-attachment: fixed;
         }}
 
-        /* ĐỒNG BỘ HIỆU ỨNG GLASSMORPHISM */
+        /* ĐỒNG BỘ HIỆU ỨNG GLASSMORPHISM CHUẨN APPLE 3D */
         .stColumn, div[data-testid="stMarkdownContainer"] > h1, 
         div[data-testid="stMarkdownContainer"] > h2, 
         .stSubheader, .stFileUploader, .stAlert, div[style*="background-color: rgba(255, 255, 255, 0.1)"] {{
-            background: rgba(255, 255, 255, 0.1) !important; 
-            backdrop-filter: blur(15px) !important;
-            -webkit-backdrop-filter: blur(15px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            border-radius: 20px !important;
+            position: relative !important;
+            background: rgba(255, 255, 255, 0.15) !important; 
+            backdrop-filter: blur(15px) saturate(180%) !important;
+            -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
+            border: 1px solid rgba(255, 255, 255, 0.8) !important; /* Viền sáng hơn */
+            border-radius: 2rem !important; /* Bo tròn nhiều hơn */
             padding: 25px !important;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1) !important;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3) !important; /* Hiệu ứng nổi khối 3D */
             margin-bottom: 25px !important;
+            z-index: 1;
+        }}
+
+        /* Lớp phản quang giả lập ánh sáng lướt qua (Specular Highlights) */
+        .stColumn::after, .stFileUploader::after, .stAlert::after, div[style*="background-color: rgba(255, 255, 255, 0.1)"]::after {{
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2rem;
+            backdrop-filter: blur(1px);
+            box-shadow: inset -10px -8px 0px -11px rgba(255, 255, 255, 1), 
+                        inset 0px -9px 0px -8px rgba(255, 255, 255, 1);
+            opacity: 0.6;
+            z-index: -1;
+            filter: blur(1px) drop-shadow(10px 4px 6px rgba(0,0,0,0.5)) brightness(115%);
+            pointer-events: none;
         }}
 
         [data-testid="stFileUploader"] {{
