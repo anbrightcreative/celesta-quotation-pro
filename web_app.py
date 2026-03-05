@@ -13,7 +13,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- HÀM PHỦ NỀN LIQUID GLASS & GIAO DIỆN ---
+# --- HÀM PHỦ NỀN & ĐỒNG BỘ STYLE LIQUID GLASS ---
 def set_bg_hack(main_bg):
     with open(main_bg, "rb") as f:
         bin_str = base64.b64encode(f.read()).decode()
@@ -21,7 +21,6 @@ def set_bg_hack(main_bg):
     st.markdown(
         f"""
         <style>
-        /* Nền phủ tràn Window */
         .stApp {{
             background: url("data:image/png;base64,{bin_str}");
             background-size: cover;
@@ -29,18 +28,23 @@ def set_bg_hack(main_bg):
             background-attachment: fixed;
         }}
 
-        /* HIỆU ỨNG GLASSMORPHISM */
+        /* ĐỒNG BỘ STYLE CHO TẤT CẢ CÁC BOX */
         .stColumn, div[data-testid="stMarkdownContainer"] > h1, 
         div[data-testid="stMarkdownContainer"] > h2, 
-        .stSubheader, .stFileUploader, .stAlert {{
+        .stSubheader, .stFileUploader, .stAlert, div[style*="background-color: rgba(255, 255, 255, 0.1)"] {{
             background: rgba(255, 255, 255, 0.1) !important; 
             backdrop-filter: blur(15px) !important;
             -webkit-backdrop-filter: blur(15px) !important;
             border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            border-radius: 25px !important;
-            padding: 20px !important;
+            border-radius: 20px !important; /* Đồng bộ bo góc 20px */
+            padding: 25px !important;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1) !important;
-            margin-bottom: 20px !important;
+            margin-bottom: 25px !important; /* Tạo khoảng cách giữa các khối */
+        }}
+
+        /* FIX KHOẢNG CÁCH CHO FILE UPLOADER */
+        [data-testid="stFileUploader"] {{
+            margin-top: 15px !important;
         }}
 
         h1, h2, h3, .stSubheader {{
@@ -48,54 +52,30 @@ def set_bg_hack(main_bg):
             text-shadow: 0px 2px 4px rgba(0,0,0,0.3);
         }}
 
-        /* --- UI NÚT BẤM CHUẨN --- */
+        /* --- UI NÚT BẤM --- */
         .stButton>button, .stDownloadButton>button {{
             width: 100% !important;
-            border-radius: 10px !important;
+            border-radius: 12px !important;
             height: 3.5em !important;
             font-size: 18px !important;
             transition: all 0.3s ease !important;
             border: none !important;
-        }}
-
-        /* Trạng thái Nút Tạo Báo Giá */
-        .stButton>button {{
-            background: rgba(255, 255, 255, 0.9) !important;
-            color: #333 !important;
             font-weight: bold !important;
         }}
-        .stButton>button:hover {{
-            transform: scale(1.02) !important;
-        }}
 
-        /* Khi Nút Tạo Báo Giá bị Disabled (Dim xuống) */
-        .stButton>button:disabled {{
-            background-color: rgba(200, 200, 200, 0.4) !important;
-            color: rgba(50, 50, 50, 0.7) !important;
-            cursor: not-allowed !important;
-            transform: none !important;
-            box-shadow: none !important;
-        }}
+        .stButton>button {{ background: rgba(255, 255, 255, 0.9) !important; color: #333 !important; }}
+        .stButton>button:disabled {{ background-color: rgba(200, 200, 200, 0.4) !important; color: rgba(50, 50, 50, 0.7) !important; }}
 
-        /* --- CẬP NHẬT: Nút Tải Báo Giá (Màu xanh lá VIP) --- */
         .stDownloadButton>button {{
-            background-color: #22C55E !important; 
-            color: #FFFFFF !important; 
-            font-weight: bold !important;
-            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4) !important;
-        }}
-        .stDownloadButton>button:hover {{
-            background-color: #16A34A !important; 
-            transform: scale(1.02) !important;
-            box-shadow: 0 6px 20px rgba(34, 197, 94, 0.6) !important;
+            background-color: #38e75c !important; 
+            color: #000 !important; 
+            box-shadow: 0 4px 15px rgba(56, 231, 92, 0.4) !important;
         }}
 
-        /* TRONG SUỐT CHO CREDIT */
         header[data-testid="stHeader"], footer, .stMarkdown hr, div[style*="text-align: center"] {{
             background: transparent !important;
             backdrop-filter: none !important;
             border: none !important;
-            box-shadow: none !important;
         }}
         </style>
         """,
@@ -105,7 +85,7 @@ def set_bg_hack(main_bg):
 if os.path.exists("web_bg.jpg"):
     set_bg_hack("web_bg.jpg")
 
-# --- HÀM XỬ LÝ ĐỒ HỌA ---
+# --- HÀM XỬ LÝ ĐỒ HỌA (GIỮ NGUYÊN) ---
 def get_lines_and_height(draw, text, font, max_w):
     raw_lines = str(text).split('\n')
     lines = []
@@ -154,29 +134,29 @@ if os.path.exists(BANNER_PNG):
 
 REQUIRED_COLS = ["STT", "Tên thuốc", "Tên hoạt chất/thành phần", "Hàm Lượng", "Đường dùng", "Dạng bào chế", "Nhóm thuốc", "Giá dịch vụ (Không BHYT)"]
 
+# --- BƯỚC 1: TẢI DỮ LIỆU & TAGS ---
 st.subheader("📤 Bước 1: Tải lên dữ liệu")
-# --- MỚI: DÒNG LƯU Ý CÁC TRƯỜNG BẮT BUỘC ---
-# Tạo chuỗi HTML cho các Tag màu xanh lá
+
 tags_html = "".join([
-    f'<span style="background-color: #38e75c; color: #000; padding: 5px 15px; '
-    f'margin: 5px; border-radius: 50px; display: inline-block; font-weight: bold; '
+    f'<span style="background-color: #38e75c; color: #000; padding: 6px 16px; '
+    f'margin: 6px; border-radius: 50px; display: inline-block; font-weight: bold; '
     f'font-size: 13px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"># {col}</span>' 
     for col in REQUIRED_COLS
 ])
 
 st.markdown(
     f"""
-    <div style="background-color: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2);">
-        <p style="color: black; margin-bottom: 15px; font-weight: bold;">⚠️ LƯU Ý: File tải lên bắt buộc phải có đủ các trường/cột bên dưới (hệ thống sẽ tự động bỏ qua các trường/cột khác:</p>
-        <div style="line-height: 2.5;">{tags_html}</div>
+    <div style="background-color: rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); margin-bottom: 20px;">
+        <p style="color: white; margin-bottom: 15px; font-weight: bold;">⚠️ File tải lên bắt buộc phải có đủ các trường sau:</p>
+        <div style="line-height: 2.8;">{tags_html}</div>
     </div>
     """, 
     unsafe_allow_html=True
 )
 
-uploaded_file = st.file_uploader("Kéo thả file Excel vào đây", type=["csv", "xlsx"])
+uploaded_file = st.file_uploader("", type=["csv", "xlsx"], key="file_upload")
 
-# KHỞI TẠO SESSION STATE CHO NÚT BẤM
+# KHỞI TẠO SESSION STATE
 if 'is_generated' not in st.session_state:
     st.session_state.is_generated = False
     st.session_state.final_pdf = None
@@ -194,10 +174,9 @@ if uploaded_file is not None:
             
             st.subheader("📄 Bước 2: Xuất báo giá PDF")
             
-            # --- LOGIC NÚT BẤM ---
             if not st.session_state.is_generated:
                 if st.button("Tạo báo giá", use_container_width=True):
-                    with st.spinner("Đang xử lý thiết kế..."):
+                    with st.spinner("Đang dàn trang..."):
                         bg_path, f_h_path, f_r_path = "Background.jpg", "GoogleSansFlex_24pt-Bold.ttf", "GoogleSansFlex_24pt-Regular.ttf"
                         W, H = 1920, 1080
                         bg_raw = Image.open(bg_path).convert("RGB").resize((W, H))
@@ -241,30 +220,19 @@ if uploaded_file is not None:
                             bw = d_p.textbbox((0, 0), p_txt, font=f_page)
                             d_p.text((W - 30 - (bw[2]-bw[0]), H - 30 - (bw[3]-bw[1])), p_txt, font=f_page, fill=(100,100,100))
 
-                        pdf_bytes_list = []
-                        for pil_img in output_images:
-                            img_io = io.BytesIO()
-                            pil_img.save(img_io, format='JPEG', quality=95)
-                            pdf_bytes_list.append(img_io.getvalue())
+                        pdf_bytes_list = [io.BytesIO() for _ in range(len(output_images))]
+                        for i, p_img in enumerate(output_images):
+                            p_img.save(pdf_bytes_list[i], format='JPEG', quality=95)
                         
-                        st.session_state.final_pdf = img2pdf.convert(pdf_bytes_list)
+                        st.session_state.final_pdf = img2pdf.convert([x.getvalue() for x in pdf_bytes_list])
                         st.session_state.is_generated = True
                         st.rerun()
-
             else:
                 col_btn1, col_btn2 = st.columns(2)
-                
                 with col_btn1:
-                    st.button("📑 Đã tạo xong báo giá", disabled=True, use_container_width=True)
-                
+                    st.button("Đã tạo xong báo giá", disabled=True, use_container_width=True)
                 with col_btn2:
-                    st.download_button(
-                        label="📂 Tải báo giá", 
-                        data=st.session_state.final_pdf, 
-                        file_name="Bao_Gia.pdf", 
-                        mime="application/pdf",
-                        use_container_width=True
-                    )
+                    st.download_button(label="Tải báo giá", data=st.session_state.final_pdf, file_name="Bao_Gia.pdf", mime="application/pdf", use_container_width=True)
                 
                 st.markdown("<br>", unsafe_allow_html=True)
                 if st.button("🔄 Làm lại file mới"):
@@ -275,4 +243,5 @@ if uploaded_file is not None:
         st.error(f"Lỗi: {e}")
 
 # 4. CREDIT
+st.markdown("<br><br>---", unsafe_allow_html=True)
 st.markdown('<div style="text-align: center; color: #FFFFFF; font-size: 14px; text-shadow: 0px 1px 3px rgba(0,0,0,0.5);">© 2026 - Created by <b>ànBright s\'more creative</b> - exclusive for <b>Celesta Pharma</b></div>', unsafe_allow_html=True)
