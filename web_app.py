@@ -293,4 +293,4 @@ if uploaded_file is not None:
 
 # 4. CREDIT
 st.markdown("<br><br>---", unsafe_allow_html=True)
-st.markdown('<div style="text-align: center; color: #FFFFFF; font-size: 14px; text-shadow: 0px 1px 3px rgba(0,0,0,0.5);">© 2026 - Created by <b>ànBright s\'more creative</b> - exclusive for <b>Celesta Pharma</b></div>', unsafe_allow_html=True)
+st.markdown('<div style="text-align: center; color: #f4f4f4; font-size: 14px; text-shadow: 0px 0px 0px rgba(0,0,0,0.0);">© 2026 - Created by <b>ànBright s\'more creative</b> - exclusive for <b>Celesta Pharma</b></div>', unsafe_allow_html=True)
