@@ -236,11 +236,11 @@ if uploaded_file is not None:
                 col_btn1, col_btn2 = st.columns(2)
                 
                 with col_btn1:
-                    st.button("Đã tạo xong báo giá", disabled=True, use_container_width=True)
+                    st.button("📑 Đã tạo xong báo giá", disabled=True, use_container_width=True)
                 
                 with col_btn2:
                     st.download_button(
-                        label="Tải báo giá", 
+                        label="📂 Tải báo giá", 
                         data=st.session_state.final_pdf, 
                         file_name="Bao_Gia.pdf", 
                         mime="application/pdf",
