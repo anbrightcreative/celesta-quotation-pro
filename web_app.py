@@ -184,7 +184,7 @@ REQUIRED_COLS = ["STT", "Tên thuốc", "Tên hoạt chất/thành phần", "Hà
 st.subheader("📤 Bước 1: Tải lên dữ liệu")
 
 tags_html = "".join([
-    f'<span style="background-color: #38e75c; color: #000; padding: 6px 16px; '
+    f'<span style="background-color: #38e75c; color: #1a1a1a; padding: 6px 16px; '
     f'margin: 6px; border-radius: 50px; display: inline-block; font-weight: bold; '
     f'font-size: 13px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"># {col}</span>' 
     for col in REQUIRED_COLS
@@ -293,4 +293,4 @@ if uploaded_file is not None:
 
 # 4. CREDIT
 st.markdown("<br><br>---", unsafe_allow_html=True)
-st.markdown('<div style="text-align: center; color: #f4f4f4; font-size: 14px; text-shadow: 0px 0px 0px rgba(0,0,0,0.0);">© 2026 - Created by <b>ànBright s\'more creative</b> - exclusive for <b>Celesta Pharma</b></div>', unsafe_allow_html=True)
+st.markdown('<div style="text-align: center; color: #1a1a1a; font-size: 14px; text-shadow: 0px 0px 0px rgba(0,0,0,0.0);">© 2026 - Created by <b>ànBright s\'more creative</b> - exclusive for <b>Celesta Pharma</b></div>', unsafe_allow_html=True)
