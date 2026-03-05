@@ -21,6 +21,41 @@ def set_bg_hack(main_bg):
     st.markdown(
         f"""
         <style>
+        # --- HÀM PHỦ NỀN & ĐỒNG BỘ STYLE LIQUID GLASS ---
+def set_bg_hack(main_bg):
+    with open(main_bg, "rb") as f:
+        bin_str = base64.b64encode(f.read()).decode()
+    
+    st.markdown(
+        f"""
+        <style>
+        /* NHÚNG FONT GOOGLE SANS VÀO GIAO DIỆN */
+        @font-face {{
+            font-family: 'GoogleSans';
+            src: url('data:font/ttf;base64,{base64.b64encode(open("GoogleSansFlex_24pt-Regular.ttf", "rb").read()).decode()}');
+        }}
+        @font-face {{
+            font-family: 'GoogleSansBold';
+            src: url('data:font/ttf;base64,{base64.b64encode(open("GoogleSansFlex_24pt-Bold.ttf", "rb").read()).decode()}');
+        }}
+
+        /* ÁP DỤNG FONT CHO TOÀN BỘ APP */
+        html, body, [class*="css"], .stMarkdown, p, span, div {{
+            font-family: 'GoogleSans', sans-serif !important;
+        }}
+        
+        h1, h2, h3, b, strong, .stSubheader {{
+            font-family: 'GoogleSansBold', sans-serif !important;
+        }}
+
+        .stApp {{
+            background: url("data:image/png;base64,{bin_str}");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }}
+        
+        /* ... Các đoạn CSS phía dưới giữ nguyên ... */
         .stApp {{
             background: url("data:image/png;base64,{bin_str}");
             background-size: cover;
