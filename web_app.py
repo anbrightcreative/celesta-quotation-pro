@@ -155,6 +155,8 @@ if os.path.exists(BANNER_PNG):
 REQUIRED_COLS = ["STT", "Tên thuốc", "Tên hoạt chất/thành phần", "Hàm Lượng", "Đường dùng", "Dạng bào chế", "Nhóm thuốc", "Giá dịch vụ (Không BHYT)"]
 
 st.subheader("📤 Bước 1: Tải lên dữ liệu")
+# --- MỚI: DÒNG LƯU Ý CÁC TRƯỜNG BẮT BUỘC ---
+st.info(f"**⚠️ Lưu ý quan trọng:** File Excel/CSV tải lên bắt buộc phải có chính xác các tiêu đề cột sau (hệ thống sẽ tự động bỏ qua các cột thừa):\n\n`{', '.join(REQUIRED_COLS)}`")
 uploaded_file = st.file_uploader("Kéo thả file Excel vào đây", type=["csv", "xlsx"])
 
 # KHỞI TẠO SESSION STATE CHO NÚT BẤM
