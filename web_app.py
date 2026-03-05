@@ -325,5 +325,4 @@ if uploaded_file is not None:
         st.error(f"Lỗi: {e}")
 
 # 4. CREDIT
-st.markdown("<br><br>---", unsafe_allow_html=True)
 st.markdown('<div style="text-align: center; color: #1a1a1a; font-size: 14px; text-shadow: 0px 0px 0px rgba(0,0,0,0.0);">© 2026 - Created by <b>ànBright s\'more creative</b> - exclusive for <b>Celesta Pharma</b></div>', unsafe_allow_html=True)
