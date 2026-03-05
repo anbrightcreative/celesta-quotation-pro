@@ -193,7 +193,7 @@ tags_html = "".join([
 st.markdown(
     f"""
     <div style="background-color: rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); margin-bottom: 20px;">
-        <p style="color: #1a1a1a; margin-bottom: 15px; font-weight: bold;">⚠️ File tải lên bắt buộc phải có đủ các trường sau (hệ thống sẽ tự động bỏ qua các trường thừa):</p>
+        <p style="color: #1a1a1a; margin-bottom: 15px; font-weight: bold;">⚠️ File tải lên bắt buộc phải có đủ các trường sau (không phân biệt viết hoa/thường):</p>
         <div style="line-height: 2.8;">{tags_html}</div>
     </div>
     """, 
@@ -210,13 +210,28 @@ if 'is_generated' not in st.session_state:
 if uploaded_file is not None:
     try:
         df_input = pd.read_csv(uploaded_file) if uploaded_file.name.endswith('.csv') else pd.read_excel(uploaded_file)
-        missing_cols = [col for col in REQUIRED_COLS if col not in df_input.columns]
         
+        # --- LOGIC MỚI: CHỐNG PHÂN BIỆT HOA/THƯỜNG ---
+        input_cols_lower = {str(col).strip().lower(): col for col in df_input.columns}
+        missing_cols = []
+        rename_mapping = {}
+        
+        for req_col in REQUIRED_COLS:
+            req_lower = req_col.lower()
+            if req_lower not in input_cols_lower:
+                missing_cols.append(req_col)
+            else:
+                # Lưu lại tên cột gốc để map sang tên chuẩn
+                rename_mapping[input_cols_lower[req_lower]] = req_col
+                
         if missing_cols:
-            st.error(f"❌ Thiếu cột: {', '.join(missing_cols)}")
+            st.error(f"❌ File đang thiếu các cột sau (hoặc bị sai chính tả): {', '.join(missing_cols)}")
         else:
+            # Đổi tên cột trong dataframe thành định dạng chuẩn
+            df_input.rename(columns=rename_mapping, inplace=True)
             df = df_input[REQUIRED_COLS].copy()
-            st.success(f"✅ Đã nhận diện {len(df)} dòng dữ liệu.")
+            
+            st.success(f"✅ Đã nhận diện khớp {len(df)} dòng dữ liệu.")
             
             st.subheader("📄 Bước 2: Xuất báo giá PDF")
             
