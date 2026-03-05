@@ -85,7 +85,7 @@ st.download_button(
     mime="text/csv"
 )
 
-st.warning("⚠️ **Lưu ý:** Sau khi tải về và nhập thông tin, anh/chị vui lòng giữ nguyên tên file là **data.csv** để hệ thống xử lý chính xác nhất.")
+st.warning("⚠️ **Lưu ý:** Sau khi tải về và nhập thông tin, anh/chị vui lòng **giữ nguyên** tên file là **data.csv** để hệ thống xử lý chính xác nhất.")
 
 st.markdown("---")
 
@@ -183,7 +183,7 @@ if uploaded_file is not None:
             st.download_button(
                 label="📥 TẢI XUỐNG TRỌN BỘ ẢNH (.ZIP)",
                 data=zip_buffer.getvalue(),
-                file_name="Bao_Gia_Creative_An.zip",
+                file_name="Bao_Gia_Celesta_Pharma.zip",
                 mime="application/zip"
             )
 
