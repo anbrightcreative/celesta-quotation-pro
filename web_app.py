@@ -158,7 +158,7 @@ st.subheader("📤 Bước 1: Tải lên dữ liệu")
 # --- MỚI: DÒNG LƯU Ý CÁC TRƯỜNG BẮT BUỘC ---
 # Tạo chuỗi HTML cho các Tag màu xanh lá
 tags_html = "".join([
-    f'<span style="background-color: #38e75c; color: #000; padding: 20px 15px; '
+    f'<span style="background-color: #38e75c; color: #000; padding: 5px 15px; '
     f'margin: 5px; border-radius: 50px; display: inline-block; font-weight: bold; '
     f'font-size: 13px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"># {col}</span>' 
     for col in REQUIRED_COLS
@@ -173,6 +173,7 @@ st.markdown(
     """, 
     unsafe_allow_html=True
 )
+
 uploaded_file = st.file_uploader("Kéo thả file Excel vào đây", type=["csv", "xlsx"])
 
 # KHỞI TẠO SESSION STATE CHO NÚT BẤM
