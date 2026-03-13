@@ -1,0 +1,21 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2868
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 [theme]\
+# \'c9p bu\uc0\u7897 c giao di\u7879 n lu\'f4n \u7903  ch\u7871  \u273 \u7897  s\'e1ng (Light Mode)\
+base="light"\
+\
+# M\'e0u ch\uc0\u7911  \u273 \u7841 o c\u7911 a app (M\'e0u xanh l\'e1 l\'fac tick checkbox)\
+primaryColor="#22C55E"\
+\
+# M\'e0u n\uc0\u7873 n t\u7843 ng (s\u7869  n\u7857 m d\u432 \u7899 i l\u7899 p \u7843 nh Liquid Glass c\u7911 a anh)\
+backgroundColor="#ffffff"\
+secondaryBackgroundColor="#f3f4f6"\
+\
+# \'c9p m\'e0u ch\uc0\u7919  m\u7863 c \u273 \u7883 nh to\'e0n h\u7879  th\u7889 ng l\'e0 m\'e0u \u273 en\
+textColor="#1a1a1a"\
+font="sans serif"}
