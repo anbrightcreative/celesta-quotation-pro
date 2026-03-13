@@ -205,9 +205,9 @@ def create_page(bg_image, cols, x_pos, col_w, f_h, margin_t, margin_x, W, H, is_
         actual_margin_t = margin_t + 180 
         if f_title and f_welcome:
             try:
-                f_main_title = ImageFont.truetype("Nunito-Black.ttf", 56) 
+                f_main_title = ImageFont.truetype("Nunito-Black.ttf", 46) 
             except:
-                f_main_title = ImageFont.truetype("GoogleSansFlex_24pt-Bold.ttf", 56) 
+                f_main_title = ImageFont.truetype("GoogleSansFlex_24pt-Bold.ttf", 46) 
             
             d.text((margin_x, margin_t - 70), doc_title.upper(), font=f_main_title, fill=(10, 36, 99))
             
@@ -241,33 +241,6 @@ if os.path.exists(BANNER_PNG):
 if 'is_generated' not in st.session_state:
     st.session_state.is_generated = False
     st.session_state.final_pdf = None
-
-# --- POP-UP WHAT'S NEW ---
-@st.dialog("🚀 WHAT'S NEW IN SMART EDITION?")
-def show_update_popup():
-    st.markdown(
-        """
-        <div style="font-family: 'GoogleSans', sans-serif; color: #1a1a1a;">
-            <p style="font-size: 16px; margin-bottom: 15px;">Hệ thống Quotation Pro vừa được nâng cấp với loạt "vũ khí" mới, giúp tối ưu hóa luồng công việc của bạn:</p>
-            <ul style="line-height: 1.8;">
-                <li>🧠 <b>Smart Data Scanner:</b> Xử lý mượt mà mọi định dạng Excel/CSV. Bất kể dòng tiêu đề nằm ở đâu hay file có chứa rác, AI Scanner sẽ tự động "đánh hơi" và trích xuất dữ liệu chuẩn xác.</li>
-                <li>🎛️ <b>Freedom of Customization:</b> Quyền lực nằm trong tay bạn. Tự do bật/tắt, lựa chọn các trường thông tin muốn hiển thị trên bản in chỉ bằng một cú tick chuột.</li>
-                <li>📏 <b>Auto-Layout Engine:</b> Dính chữ hay tràn khung đã là dĩ vãng! Hệ thống tự động chia lại tỷ lệ bề rộng cột và bẻ dòng thông minh bất chấp độ dài của văn bản.</li>
-                <li>💌 <b>Personalized Welcome:</b> Chuyên nghiệp hóa trải nghiệm đối tác với thư ngỏ chào mừng tự động điền tên và tùy biến ngay trên trang bìa.</li>
-            </ul>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-    if st.button("Tuyệt vời, trải nghiệm ngay!", use_container_width=True):
-        st.session_state.has_seen_update = True
-        st.rerun()
-
-if 'has_seen_update' not in st.session_state:
-    st.session_state.has_seen_update = False
-
-if not st.session_state.has_seen_update:
-    show_update_popup()
 
 # 3. GIAO DIỆN CHÍNH CẤU TRÚC CHUẨN V3 (KHÔNG DÙNG CONTAINER)
 st.subheader("✍️ Bước 1: Thông tin khách hàng")
@@ -428,5 +401,5 @@ if uploaded_file is not None:
         st.error(f"Lỗi hệ thống: {e}")
 
 # 4. CREDIT TRONG SUỐT BẢN V3
-
-st.markdown('<div style="text-align: center; color: #FFFFFF; font-size: 14px; text-shadow: 0px 0px 0px rgba(0,0,0,0);">© 2026 - Created by <b>ànBright s\'more creative</b> - exclusive for <b>Celesta Pharma</b></div>', unsafe_allow_html=True)
+st.markdown("<br><br>---", unsafe_allow_html=True)
+st.markdown('<div style="text-align: center; color: #FFFFFF; font-size: 14px; text-shadow: 0px 1px 3px rgba(0,0,0,0.5);">© 2026 - Created by <b>ànBright s\'more creative</b> - exclusive for <b>Celesta Pharma</b></div>', unsafe_allow_html=True)
