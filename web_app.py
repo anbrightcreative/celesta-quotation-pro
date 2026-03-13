@@ -146,7 +146,7 @@ if 'final_pdf' not in st.session_state: st.session_state.final_pdf = None
 # 4. GIAO DIỆN
 st.subheader("✍️ Bước 1: Thông tin khách hàng")
 col1, col2 = st.columns([1.5, 1])
-with col1: customer_name = st.text_input("Kính gửi:", placeholder="VD: Bệnh viện Đa khoa Tâm Anh")
+with col1: customer_name = st.text_input("Tên Khách hàng/Đối tác:", placeholder="VD: Bệnh viện Đa khoa Tâm Anh")
 with col2: doc_type = st.radio("Loại tài liệu:", ["Bảng giá", "Danh mục sản phẩm"], horizontal=True)
 
 st.subheader("📤 Bước 2: Tải lên dữ liệu")
