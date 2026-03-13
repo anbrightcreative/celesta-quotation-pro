@@ -13,7 +13,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# --- HÀM PHÙ PHÉP GIAO DIỆN LIQUID GLASS (BÊ NGUYÊN TỪ V3 CỦA ANH) ---
+# --- HÀM PHÙ PHÉP GIAO DIỆN LIQUID GLASS & ANTI-DARKMODE ---
 def set_bg_hack(main_bg):
     with open(main_bg, "rb") as f:
         bin_str = base64.b64encode(f.read()).decode()
@@ -32,13 +32,17 @@ def set_bg_hack(main_bg):
         @font-face {{ font-family: 'GoogleSans'; src: url('data:font/ttf;base64,{font_reg_b64}'); }}
         @font-face {{ font-family: 'GoogleSansBold'; src: url('data:font/ttf;base64,{font_bold_b64}'); }}
 
+        /* --- SIÊU CẤP ANTI-DARKMODE: ÉP TOÀN BỘ HỆ THỐNG SANG LIGHT THEME --- */
+        :root {{ color-scheme: light !important; }}
+        
         html, body, [class*="css"], span, div, button, input {{
             font-family: 'GoogleSans', sans-serif !important;
         }}
         
-        /* 1. FIX MÀU CHỮ ĐEN CHO TOÀN BỘ TEXT ĐỂ NỔI TRÊN NỀN KÍNH */
-        p, h1, h2, h3, .stSubheader, label p, div[data-testid="stMarkdownContainer"] p {{
+        /* FIX MÀU CHỮ ĐEN CHO TOÀN BỘ TEXT */
+        p, h1, h2, h3, .stSubheader, label p, div[data-testid="stMarkdownContainer"] p, input {{
             color: #1a1a1a !important;
+            -webkit-text-fill-color: #1a1a1a !important;
             text-shadow: none !important;
         }}
         h1, h2, h3, b, strong, .stSubheader {{
@@ -48,13 +52,10 @@ def set_bg_hack(main_bg):
         /* Nền phủ tràn toàn bộ Window */
         .stApp {{
             background: url("data:image/png;base64,{bin_str}");
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-size: cover; background-position: center; background-repeat: no-repeat; background-attachment: fixed;
         }}
 
-        /* HIỆU ỨNG LIQUID GLASS (GLASSMORPHISM) CHUẨN V3 */
+        /* HIỆU ỨNG LIQUID GLASS CHUẨN V3 */
         .stColumn, div[data-testid="stMarkdownContainer"] > h1, 
         div[data-testid="stMarkdownContainer"] > h2, 
         .stSubheader, .stFileUploader, .stAlert {{
@@ -68,7 +69,18 @@ def set_bg_hack(main_bg):
             margin-bottom: 20px !important;
         }}
 
-        /* ÉP PHẦN CREDIT VÀ GẠCH NGANG TRONG SUỐT HOÀN TOÀN */
+        /* FIX BOX NHẬP LIỆU VÀ DROPZONE SANG TRẮNG SẠCH SẼ */
+        div[data-baseweb="input"] {{
+            background-color: #ffffff !important;
+            border: 1px solid #d1d5db !important;
+        }}
+        [data-testid="stFileUploadDropzone"] {{
+            background-color: #ffffff !important;
+            border: 2px dashed #d1d5db !important;
+        }}
+        [data-testid="stFileUploadDropzone"] * {{ color: #1a1a1a !important; }}
+
+        /* ÉP TRONG SUỐT CHO CÁC PHẦN THỪA */
         header[data-testid="stHeader"], footer, .stMarkdown hr, div[style*="text-align: center"] {{
             background: transparent !important;
             backdrop-filter: none !important;
@@ -76,75 +88,29 @@ def set_bg_hack(main_bg):
             box-shadow: none !important;
         }}
 
-        /* 2. FIX LỖI DARKMODE CHO FILE UPLOADER (TRẢ LẠI NỀN TỐI & CHỮ TRẮNG CHO KHUNG DROPZONE) */
-        [data-testid="stFileUploadDropzone"] {{
-            background-color: rgb(38, 39, 48) !important; 
-            border: 1px solid rgba(250, 250, 250, 0.2) !important;
-            border-radius: 8px !important;
-        }}
-        [data-testid="stFileUploadDropzone"] * {{
-            color: #ffffff !important; 
-        }}
-        [data-testid="stFileUploadDropzone"] button {{
-            background-color: rgba(255,255,255,0.1) !important;
-            border: 1px solid rgba(255, 255, 255, 0.4) !important;
-            color: #ffffff !important;
-        }}
-        [data-testid="stFileUploadDropzone"] button:hover {{
-            background-color: rgba(255,255,255,0.2) !important;
-            border: 1px solid #ffffff !important;
-        }}
-
-        /* 3. UX CHECKBOX TRẠNG THÁI ĐỘNG XÁM/XANH */
+        /* UX CHECKBOX TRẠNG THÁI ĐỘNG XÁM/XANH */
         div[data-testid="stCheckbox"] {{
-            padding: 10px 15px !important;
-            border-radius: 12px !important;
-            transition: all 0.3s ease !important;
-            margin-bottom: 10px !important;
+            padding: 10px 15px !important; border-radius: 12px !important; transition: all 0.3s ease !important; margin-bottom: 10px !important;
         }}
-        div[data-testid="stCheckbox"]:not(:has(input:checked)) {{
-            background: rgba(243, 244, 246, 0.7) !important; 
-            border: 1px solid rgba(209, 213, 219, 0.8) !important;
+        div[data-testid="stCheckbox"]:not(:has(input:checked)) {{ 
+            background: rgba(243, 244, 246, 0.7) !important; border: 1px solid rgba(209, 213, 219, 0.8) !important; 
         }}
-        div[data-testid="stCheckbox"]:not(:has(input:checked)) label p {{
-            color: #4B5563 !important; 
+        div[data-testid="stCheckbox"]:not(:has(input:checked)) label p {{ color: #4B5563 !important; }}
+        div[data-testid="stCheckbox"]:has(input:checked) {{ 
+            background: rgba(34, 197, 94, 0.85) !important; border: 1px solid #16A34A !important; box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3) !important; 
         }}
-        div[data-testid="stCheckbox"]:has(input:checked) {{
-            background: rgba(34, 197, 94, 0.85) !important; 
-            border: 1px solid #16A34A !important;
-            box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3) !important;
-        }}
-        div[data-testid="stCheckbox"]:has(input:checked) label p {{
-            color: #ffffff !important; 
-            font-weight: bold !important;
-        }}
+        div[data-testid="stCheckbox"]:has(input:checked) label p {{ color: #ffffff !important; font-weight: bold !important; }}
         
         /* Tinh chỉnh nút bấm hiện đại */
         .stButton>button, .stDownloadButton>button {{
-            width: 100%;
-            border-radius: 12px;
-            font-size: 18px !important;
-            height: 3.5em !important;
-            background: rgba(255, 255, 255, 0.4);
-            color: #1a1a1a !important;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: 0.3s;
-            font-weight: bold;
+            width: 100%; border-radius: 12px; font-size: 18px !important; height: 3.5em !important; 
+            background: rgba(255, 255, 255, 0.4); color: #1a1a1a !important; backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255, 255, 255, 0.5); transition: 0.3s; font-weight: bold;
         }}
-        .stButton>button:hover, .stDownloadButton>button:hover {{
-            background: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(255, 255, 255, 1);
-            transform: translateY(-2px);
+        .stButton>button:hover, .stDownloadButton>button:hover {{ 
+            background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(255, 255, 255, 1); transform: translateY(-2px); 
         }}
-        .stDownloadButton>button {{
-            background-color: rgba(34, 197, 94, 0.9) !important;
-            color: #ffffff !important;
-            border: none !important;
-        }}
-        .stDownloadButton>button:hover {{
-            background-color: #16A34A !important;
-        }}
+        .stDownloadButton>button {{ background-color: rgba(34, 197, 94, 0.9) !important; color: #ffffff !important; border: none !important; }}
         </style>
         """,
         unsafe_allow_html=True
@@ -153,7 +119,7 @@ def set_bg_hack(main_bg):
 if os.path.exists("web_bg.jpg"):
     set_bg_hack("web_bg.jpg")
 
-# --- HÀM XỬ LÝ ĐỒ HỌA BÁO GIÁ (BẢN FIX LỖI DÍNH CHỮ) ---
+# --- HÀM XỬ LÝ ĐỒ HỌA PDF THÔNG MINH ---
 def get_lines_and_height(draw, text, font, max_w):
     raw_lines = str(text).split('\n')
     lines = []
@@ -161,7 +127,6 @@ def get_lines_and_height(draw, text, font, max_w):
         words = r_line.strip().split()
         current_line = ""
         for word in words:
-            # Chống dính chữ cho từ siêu dài
             if draw.textbbox((0, 0), word, font=font)[2] > max_w:
                 temp_word = ""
                 for char in word:
@@ -205,9 +170,9 @@ def create_page(bg_image, cols, x_pos, col_w, f_h, margin_t, margin_x, W, H, is_
         actual_margin_t = margin_t + 180 
         if f_title and f_welcome:
             try:
-                f_main_title = ImageFont.truetype("Nunito-Black.ttf", 56) 
+                f_main_title = ImageFont.truetype("Nunito-Black.ttf", 46) 
             except:
-                f_main_title = ImageFont.truetype("GoogleSansFlex_24pt-Bold.ttf", 56) 
+                f_main_title = ImageFont.truetype("GoogleSansFlex_24pt-Bold.ttf", 46) 
             
             d.text((margin_x, margin_t - 70), doc_title.upper(), font=f_main_title, fill=(10, 36, 99))
             
@@ -250,10 +215,10 @@ def show_update_popup():
         <div style="font-family: 'GoogleSans', sans-serif; color: #1a1a1a;">
             <p style="font-size: 16px; margin-bottom: 15px;">Hệ thống Quotation Pro vừa được nâng cấp với loạt "vũ khí" mới, giúp tối ưu hóa luồng công việc của bạn:</p>
             <ul style="line-height: 1.8;">
-                <li>🧠 <b>Smart Data Scanner:</b> Xử lý mượt mà mọi định dạng Excel/CSV. Bất kể dòng tiêu đề nằm ở đâu hay file có chứa rác, AI Scanner sẽ tự động "đánh hơi" và trích xuất dữ liệu chuẩn xác.</li>
-                <li>🎛️ <b>Freedom of Customization:</b> Quyền lực nằm trong tay bạn. Tự do bật/tắt, lựa chọn các trường thông tin muốn hiển thị trên bản in chỉ bằng một cú tick chuột.</li>
-                <li>📏 <b>Auto-Layout Engine:</b> Dính chữ hay tràn khung đã là dĩ vãng! Hệ thống tự động chia lại tỷ lệ bề rộng cột và bẻ dòng thông minh bất chấp độ dài của văn bản.</li>
-                <li>💌 <b>Personalized Welcome:</b> Chuyên nghiệp hóa trải nghiệm đối tác với thư ngỏ chào mừng tự động điền tên và tùy biến ngay trên trang bìa.</li>
+                <li>🧠 <b>Smart Data Scanner:</b> Tự động trích xuất dữ liệu chuẩn xác từ bất kỳ file Excel/CSV nào, bất kể cấu trúc header phức tạp.</li>
+                <li>🎛️ <b>Freedom of Customization:</b> Quyền tùy biến tuyệt đối - lựa chọn chính xác các trường thông tin hiển thị chỉ bằng một cú click.</li>
+                <li>📏 <b>Auto-Layout Engine:</b> Thuật toán bẻ dòng và phân chia tỷ lệ cột thông minh, đảm bảo bản in PDF luôn hoàn hảo, không còn dính chữ.</li>
+                <li>💌 <b>Personalized Welcome:</b> Tự động cá nhân hóa thư ngỏ chào mừng đối tác ngay trên trang bìa báo giá.</li>
             </ul>
         </div>
         """,
@@ -269,7 +234,7 @@ if 'has_seen_update' not in st.session_state:
 if not st.session_state.has_seen_update:
     show_update_popup()
 
-# 3. GIAO DIỆN CHÍNH CẤU TRÚC CHUẨN V3 (KHÔNG DÙNG CONTAINER)
+# 3. GIAO DIỆN CHÍNH
 st.subheader("✍️ Bước 1: Thông tin khách hàng")
 col1, col2 = st.columns([1.5, 1])
 with col1:
@@ -282,7 +247,6 @@ uploaded_file = st.file_uploader("App sẽ tự động quét file để tìm ti
 
 if uploaded_file is not None:
     try:
-        # --- LOGIC QUÉT DÒNG THÔNG MINH ---
         if uploaded_file.name.endswith('.csv'):
             df_temp = pd.read_csv(uploaded_file, header=None)
         else:
@@ -310,9 +274,7 @@ if uploaded_file is not None:
             if str(col).lower() != 'nan' and 'unnamed' not in str(col).lower() and str(col) != '':
                 all_columns.append(col)
 
-        # --- BƯỚC 3: CHỌN CỘT ---
         st.subheader("☑️ Bước 3: Tick chọn các cột muốn in ra PDF")
-        
         selected_cols = []
         cols = st.columns(4) 
         for i, col_name in enumerate(all_columns):
@@ -324,7 +286,6 @@ if uploaded_file is not None:
             st.warning("⚠️ Vui lòng tick chọn ít nhất 1 trường dữ liệu để tiếp tục.")
         else:
             df = df_input[selected_cols].copy()
-            
             st.subheader("📄 Bước 4: Xuất báo giá PDF")
             
             if not st.session_state.is_generated:
@@ -336,10 +297,8 @@ if uploaded_file is not None:
                         f_h = ImageFont.truetype(f_h_path, 20)
                         
                         dynamic_font_size = 15
-                        if len(selected_cols) > 8:
-                            dynamic_font_size = 12
-                        elif len(selected_cols) > 6:
-                            dynamic_font_size = 13
+                        if len(selected_cols) > 8: dynamic_font_size = 12
+                        elif len(selected_cols) > 6: dynamic_font_size = 13
                         f_b = ImageFont.truetype(f_r_path, dynamic_font_size)
                         
                         f_page = ImageFont.truetype(f_r_path, 13)
@@ -364,9 +323,7 @@ if uploaded_file is not None:
                         
                         x_pos = []
                         curr_x = margin_x
-                        for w in col_w: 
-                            x_pos.append(curr_x)
-                            curr_x += w
+                        for w in col_w: x_pos.append(curr_x); curr_x += w
                         
                         output_images, img, draw, curr_y = [], None, None, 0
                         dummy_draw = ImageDraw.Draw(Image.new('RGB', (W, H)))
@@ -379,7 +336,6 @@ if uploaded_file is not None:
                                 if 'giá' in str(col).lower() or 'tiền' in str(col).lower():
                                     try: val = f"{int(float(val)):,} VND" if val else ""
                                     except: pass
-                                
                                 m_w = col_w[idx] - 15 
                                 lines, h = get_lines_and_height(dummy_draw, val, f_b, m_w)
                                 r_lines.append(lines); r_max_h = max(r_max_h, h)
@@ -413,8 +369,7 @@ if uploaded_file is not None:
                         st.rerun()
             else:
                 col_btn1, col_btn2 = st.columns(2)
-                with col_btn1:
-                    st.button("📑 Đã tạo xong báo giá", disabled=True, use_container_width=True)
+                with col_btn1: st.button("📑 Đã tạo xong báo giá", disabled=True, use_container_width=True)
                 with col_btn2:
                     file_name_export = "Bao_Gia_Celesta.pdf" if doc_type == "Bảng giá" else "Danh_Muc_Celesta.pdf"
                     st.download_button(label="📥 Tải file PDF", data=st.session_state.final_pdf, file_name=file_name_export, mime="application/pdf", use_container_width=True)
@@ -428,5 +383,5 @@ if uploaded_file is not None:
         st.error(f"Lỗi hệ thống: {e}")
 
 # 4. CREDIT TRONG SUỐT BẢN V3
-
-st.markdown('<div style="text-align: center; color: #FFFFFF; font-size: 14px; text-shadow: 0px 0px 0px rgba(0,0,0,0);">© 2026 - Created by <b>ànBright s\'more creative</b> - exclusive for <b>Celesta Pharma</b></div>', unsafe_allow_html=True)
+st.markdown("<br><br>---", unsafe_allow_html=True)
+st.markdown('<div style="text-align: center; color: #FFFFFF; font-size: 14px; text-shadow: 0px 1px 3px rgba(0,0,0,0.5);">© 2026 - Created by <b>ànBright s\'more creative</b> - exclusive for <b>Celesta Pharma</b></div>', unsafe_allow_html=True)
