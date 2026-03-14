@@ -6,6 +6,9 @@
 \pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
 
 \f0\fs24 \cf0 [theme]\
+base="light"
+primaryColor="#37c500"
+
 # \'c9p bu\uc0\u7897 c giao di\u7879 n lu\'f4n \u7903  ch\u7871  \u273 \u7897  s\'e1ng (Light Mode)\
 base="light"\
 \
